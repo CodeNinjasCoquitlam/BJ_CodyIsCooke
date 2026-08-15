@@ -756,7 +756,6 @@ GameObject:
   m_Component:
   - component: {fileID: 169538056}
   - component: {fileID: 169538059}
-  - component: {fileID: 169538058}
   - component: {fileID: 169538057}
   m_Layer: 0
   m_Name: PortraitCamera
@@ -824,14 +823,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &169538058
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 169538055}
-  m_Enabled: 1
 --- !u!20 &169538059
 Camera:
   m_ObjectHideFlags: 0
@@ -5089,6 +5080,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7f8bf37bb7a312f478ae92d0810f02b4, type: 3}
+--- !u!1 &1010517898 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2033886546264645911, guid: b32bd5e0a44542f40b06626d0f879530, type: 3}
+  m_PrefabInstance: {fileID: 480496575}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1030813857 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 16552943175158417, guid: 2dd8446d5d47e76478a67a28ebf6f864, type: 3}
@@ -9362,12 +9358,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 192b10d8714a6dc46b75cf58e80c5dc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Interact
-  Codey: {fileID: 0}
-  TextObject: {fileID: 0}
-  InteractText: {fileID: 0}
+  Codey: {fileID: 1010517898}
+  TextObject: {fileID: 1245413218}
+  InteractText: {fileID: 1245413221}
+  TextAction: Open Fridge
   KeyCodeToPress: 32
   KeyCodeToPressString: Space
-  action: 
   onInteract:
     m_PersistentCalls:
       m_Calls: []
