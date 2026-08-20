@@ -2,20 +2,14 @@ using UnityEngine;
 
 public class Dialogue : MonoBehaviour
 {
-
     [SerializeField] private DialogueSO dialogueSO;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void StartDialogue()
     {
-        Debug.Log(dialogueSO.firstDialogue);
+        //PortraitManagerLoadPortrait
+        //LoadFirstDialogue
+        //Load First Choices If They Exsist
+        //
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Debug.Log(dialogueSO.testDialogue);
-        }
-    }
+    
 }
