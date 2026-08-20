@@ -16,9 +16,6 @@ public class DialougeManager : MonoBehaviour
     public Text Choice2Text;
     public Text Choice3Text;
     public Text NameText;
-
-
-    public 
     void Start()
     {
         
@@ -28,4 +25,6 @@ public class DialougeManager : MonoBehaviour
     {
         
     }
+
+   
 }
