@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DialougeManager : MonoBehaviour
 {
@@ -10,15 +11,20 @@ public class DialougeManager : MonoBehaviour
     public GameObject Choice2;
     public GameObject Choice3;
     public GameObject PressSpaceToSkip;
+    public GameObject PortraitAnchor;
     [Header("Texts")]
     public Text DialogueBoxTEXT;
     public Text Choice1Text;
     public Text Choice2Text;
     public Text Choice3Text;
     public Text NameText;
+    [Header("idk")]
+    public PortraitManager portratmanager; 
+
     void Start()
     {
-        
+        DialogueBOX.SetActive(false);
+        portratmanager = this.gameObject.GetComponent<PortraitManager>();
     }
 
     void Update()
@@ -26,5 +32,9 @@ public class DialougeManager : MonoBehaviour
         
     }
 
-   
+    public void InitiateDialouge(DialogueSO dialogueSO)
+    {
+        portratmanager.CreatePortrait();
+        DialogueBOX.SetActive(true);
+    }
 }

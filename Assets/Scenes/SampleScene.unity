@@ -2043,7 +2043,7 @@ Transform:
   m_GameObject: {fileID: 410087039}
   serializedVersion: 2
   m_LocalRotation: {x: -0.000121224206, y: -0.6977054, z: 0.7163492, w: 0.0071491566}
-  m_LocalPosition: {x: -7.5473375, y: 0.53999996, z: -21.219013}
+  m_LocalPosition: {x: -6.8, y: 77.8, z: -23.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4357,6 +4357,78 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7049231464498255489, guid: 45b96a44bd912b449844a214ac51d018, type: 3}
   m_PrefabInstance: {fileID: 1985284346}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &750215386
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 750215389}
+  - component: {fileID: 750215388}
+  - component: {fileID: 750215387}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &750215387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 750215386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77c9752ab3c2c4f4781fe50ebd2bf492, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NewMonoBehaviourScript
+  dialoguemanager: {fileID: 0}
+--- !u!114 &750215388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 750215386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80243f8ca767adb45902ef59423b9b3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialougeManager
+  Portrait: {fileID: 494575697}
+  Name: {fileID: 401356520}
+  DialogueBOX: {fileID: 133825376}
+  Choice1: {fileID: 1550166593}
+  Choice2: {fileID: 662719742}
+  Choice3: {fileID: 605420708}
+  PressSpaceToSkip: {fileID: 125632273}
+  PortraitAnchor: {fileID: 144074516}
+  DialogueBoxTEXT: {fileID: 201835400}
+  Choice1Text: {fileID: 1550166595}
+  Choice2Text: {fileID: 662719744}
+  Choice3Text: {fileID: 605420710}
+  NameText: {fileID: 401356522}
+  portratmanager: {fileID: 0}
+--- !u!4 &750215389
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 750215386}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1123.8168, y: -670.4338, z: 981.4208}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &761447159
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5285,7 +5357,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3870285625942986380, guid: ba9199147aa40894ca7f66b182e48c40, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.21
       objectReference: {fileID: 0}
     - target: {fileID: 3870285625942986380, guid: ba9199147aa40894ca7f66b182e48c40, type: 3}
       propertyPath: m_LocalPosition.y
@@ -9917,3 +9989,4 @@ SceneRoots:
   - {fileID: 1724877496}
   - {fileID: 1566238927}
   - {fileID: 1853307925}
+  - {fileID: 750215389}
