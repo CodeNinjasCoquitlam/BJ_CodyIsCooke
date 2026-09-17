@@ -37,7 +37,7 @@ public class Interact : MonoBehaviour
         {
             IsInRange = true;
             TextObject.SetActive(true);
-            InteractText.text = "Press " + KeyCodeToPressString + "To " + TextAction;
+            InteractText.text = "Press " + KeyCodeToPressString + " To " + TextAction;
         }
     }
 

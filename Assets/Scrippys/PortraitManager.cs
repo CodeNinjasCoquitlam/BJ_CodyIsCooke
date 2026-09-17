@@ -2,30 +2,25 @@ using UnityEngine;
 
 public class PortraitManager : MonoBehaviour
 {
-    private GameObject ObjectToClone;
-    private GameObject PortraitAnchor;
     private GameObject clone;
-
-    private Vector3 Offset;
-    private Vector3 OffsetRot;
-    private Vector3 OffsetScale;
 
     public DialougeManager dialoguemanager;
     
 
-    void start()
+    void Start()
     {
-        this.gameObject.GetComponent<DialougeManager>();
+        dialoguemanager = this.gameObject.GetComponent<DialougeManager>();
+        ClearPortrait();
     }
 
-    public void CreatePortrait()
+    public void CreatePortrait(DialogueSO dialogue)
     {
-        PortraitAnchor = dialoguemanager.PortraitAnchor;
-        clone = Instantiate(ObjectToClone, PortraitAnchor.transform.position + Offset, Quaternion.Euler(OffsetRot));
+        
+        clone = Instantiate(dialogue.ThingTalking, dialoguemanager.PortraitAnchor.transform.position + dialogue.TalkingThingOffset, dialogue.TalkingThingOffsetRotation);
     }
 
     public void ClearPortrait()
     {
-        Destroy(ObjectToClone);
+        Destroy(clone);
     }
 }

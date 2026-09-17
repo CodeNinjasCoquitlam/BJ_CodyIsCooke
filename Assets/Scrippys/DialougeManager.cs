@@ -29,12 +29,18 @@ public class DialougeManager : MonoBehaviour
 
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            portratmanager.ClearPortrait();
+            DialogueBOX.SetActive(false);
+            DialogueBoxTEXT.text = "";
+        }
     }
 
     public void InitiateDialouge(DialogueSO dialogueSO)
     {
-        portratmanager.CreatePortrait();
+        portratmanager.CreatePortrait(dialogueSO);
         DialogueBOX.SetActive(true);
+        DialogueBoxTEXT.text = dialogueSO.dialogues[0].person1Dialogue[0];
     }
 }

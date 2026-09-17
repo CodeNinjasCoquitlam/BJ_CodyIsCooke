@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdead6b77220aa1418b9a4746aae5586, type: 3}
   m_Name: FridgeDialogue
   m_EditorClassIdentifier: Assembly-CSharp::DialogueSO
-  ThingTalking: {fileID: 0}
-  TalkingThingOffset: {x: 0, y: 0, z: 0}
-  TalkingThingOffsetRotation: {x: 0, y: 0, z: 0, w: 0}
+  ThingTalking: {fileID: 4539018100729812022, guid: d189f3145d1be2d478000ae4ffe578ad, type: 3}
+  TalkingThingOffset: {x: 0, y: -2.25, z: 3.5}
+  TalkingThingOffsetRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
   TalkingThingScaleOffsetType: {x: 0, y: 0, z: 0}
   dialogues:
   - conversationName: FirstFridge
