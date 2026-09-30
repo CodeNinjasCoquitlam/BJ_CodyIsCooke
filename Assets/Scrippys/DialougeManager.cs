@@ -22,7 +22,7 @@ public class DialogueManager : MonoBehaviour
 
     [Header("Portrait Setup")]
     public GameObject PortraitAnchor;
-    public PortraitManager portraitManager;
+    private PortraitManager portraitManager;
 
     [Header("State")]
     public bool DialogueActive = false;
@@ -49,7 +49,6 @@ public class DialogueManager : MonoBehaviour
     {
         if (!DialogueActive) return;
 
-        // Exit dialogue on Escape
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             CloseDialogue();
@@ -102,6 +101,52 @@ public class DialogueManager : MonoBehaviour
             portraitManager.CreatePortrait(dialogueSO);
 
         DisplaySpeech(initialSpeechID);
+    }
+
+    /// <summary>
+    /// Call this function inside UnityEvents (e.g. choice events) to jump to a specific 
+    /// conversation and speech ID, with an optional new DialogueSO.
+    /// </summary>
+    public void JumpToDialogue(DialogueSO newSO, string conversationName, string speechID)
+    {
+        // If a new DialogueSO is assigned, switch to it and recreate the portrait
+        if (newSO != null && newSO != activeDialogueSO)
+        {
+            activeDialogueSO = newSO;
+
+            if (portraitManager != null)
+            {
+                portraitManager.ClearPortrait();
+                portraitManager.CreatePortrait(activeDialogueSO);
+            }
+        }
+
+        if (activeDialogueSO == null)
+        {
+            Debug.LogError("JumpToDialogue failed: No Active DialogueSO set!");
+            return;
+        }
+
+        currentConversation = activeDialogueSO.GetConversationByName(conversationName);
+
+        if (currentConversation == null)
+        {
+            Debug.LogError($"JumpToDialogue failed: Conversation '{conversationName}' not found!");
+            return;
+        }
+
+        DialogueActive = true;
+        DialogueBOX.SetActive(true);
+
+        DisplaySpeech(speechID);
+    }
+
+    /// <summary>
+    /// Overload for JumpToDialogue when staying on the currently active DialogueSO.
+    /// </summary>
+    public void JumpToDialogueSameSO(string conversationName, string speechID)
+    {
+        JumpToDialogue(null, conversationName, speechID);
     }
 
     private void DisplaySpeech(string speechID)
@@ -158,12 +203,19 @@ public class DialogueManager : MonoBehaviour
 
         DialogueSO.Choicess choicesData = activeDialogueSO.GetChoicessByName(currentConversation.conversationName, currentSpeech.ChoicesIndexInt.ToString());
 
+        // Store active speech before invoking event in case an event calls JumpToDialogue
+        DialogueSO.TalkingThingDialogue cachedSpeech = currentSpeech;
+
         if (choicesData != null && choicesData.ThreeOptionEvents != null && optionIndex < choicesData.ThreeOptionEvents.Length)
         {
             choicesData.ThreeOptionEvents[optionIndex]?.Invoke();
         }
 
-        AdvanceDialogue();
+        // Only auto-advance if the choice event didn't trigger a JumpToDialogue call
+        if (currentSpeech == cachedSpeech)
+        {
+            AdvanceDialogue();
+        }
     }
 
     private void ToggleChoices(bool show)

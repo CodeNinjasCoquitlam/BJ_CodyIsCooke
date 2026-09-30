@@ -4,12 +4,12 @@ public class PortraitManager : MonoBehaviour
 {
     private GameObject clone;
 
-    public DialougeManager dialoguemanager;
+    private DialogueManager dialoguemanager;
     
 
     void Start()
     {
-        dialoguemanager = this.gameObject.GetComponent<DialougeManager>();
+        dialoguemanager = this.gameObject.GetComponent<DialogueManager>();
         ClearPortrait();
     }
 

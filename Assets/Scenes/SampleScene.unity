@@ -4387,7 +4387,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77c9752ab3c2c4f4781fe50ebd2bf492, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NewMonoBehaviourScript
-  dialoguemanager: {fileID: 750215388}
 --- !u!114 &750215388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4400,23 +4399,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80243f8ca767adb45902ef59423b9b3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialougeManager
-  Portrait: {fileID: 494575697}
-  Name: {fileID: 401356520}
   DialogueBOX: {fileID: 133825376}
+  DialogueBoxTEXT: {fileID: 201835400}
+  NameText: {fileID: 401356522}
+  PressSpaceToSkip: {fileID: 125632273}
   Choice1: {fileID: 1550166593}
   Choice2: {fileID: 662719742}
   Choice3: {fileID: 605420708}
-  PressSpaceToSkip: {fileID: 125632273}
-  PortraitAnchor: {fileID: 144074516}
-  DialogueBoxTEXT: {fileID: 201835400}
   Choice1Text: {fileID: 1550166595}
   Choice2Text: {fileID: 662719744}
   Choice3Text: {fileID: 605420710}
-  NameText: {fileID: 401356522}
-  portratmanager: {fileID: 0}
+  Choice1Button: {fileID: 0}
+  Choice2Button: {fileID: 0}
+  Choice3Button: {fileID: 0}
+  PortraitAnchor: {fileID: 144074516}
   DialogueActive: 0
-  activeDialogueIndexIntThing: 0
-  NextDialogue: 
 --- !u!4 &750215389
 Transform:
   m_ObjectHideFlags: 0
@@ -9785,13 +9782,13 @@ MonoBehaviour:
   onInteract:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 750215388}
-        m_TargetAssemblyTypeName: DialougeManager, Assembly-CSharp
-        m_MethodName: InitiateDialouge
-        m_Mode: 2
+      - m_Target: {fileID: 750215386}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 0
         m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: 74281db3fd7b0b84fbe656f4467dfe98, type: 2}
-          m_ObjectArgumentAssemblyTypeName: DialogueSO, Assembly-CSharp
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
