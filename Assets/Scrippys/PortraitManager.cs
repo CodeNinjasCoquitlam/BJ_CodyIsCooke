@@ -15,8 +15,11 @@ public class PortraitManager : MonoBehaviour
 
     public void CreatePortrait(DialogueSO dialogue)
     {
-        
-        clone = Instantiate(dialogue.ThingTalking, dialoguemanager.PortraitAnchor.transform.position + dialogue.TalkingThingOffset, dialogue.TalkingThingOffsetRotation);
+        clone = Instantiate(
+            dialogue.ThingTalking,
+            dialoguemanager.PortraitAnchor.transform.position + dialogue.TalkingThingOffset,
+            dialogue.TalkingThingOffsetRotation
+            );
     }
 
     public void ClearPortrait()

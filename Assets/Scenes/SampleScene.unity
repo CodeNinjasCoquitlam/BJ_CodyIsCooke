@@ -598,8 +598,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 609.9624, y: -112.27}
-  m_SizeDelta: {x: 380.0552, y: 75.461}
+  m_AnchoredPosition: {x: 547.05, y: 110.93}
+  m_SizeDelta: {x: 467.7732, y: 75.461}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &125632275
 MonoBehaviour:
@@ -634,7 +634,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Press Space To Skip
+  m_Text: Press Space To Skip/Move On
 --- !u!222 &125632276
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1768,7 +1768,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -432, y: 113}
+  m_AnchoredPosition: {x: -526.57, y: 113}
   m_SizeDelta: {x: 267.8423, y: 71.3176}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &401356522
@@ -2623,8 +2623,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -652.38, y: 2.3781}
-  m_SizeDelta: {x: 295.24, y: 295.2439}
+  m_AnchoredPosition: {x: -675, y: 23.659}
+  m_SizeDelta: {x: 250, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &494575699
 MonoBehaviour:
@@ -3322,8 +3322,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 262.03, y: -109.88999}
-  m_SizeDelta: {x: 315.8052, y: 70.705}
+  m_AnchoredPosition: {x: 556.58, y: -109.89}
+  m_SizeDelta: {x: 486.83, y: 70.705}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &605420710
 MonoBehaviour:
@@ -3893,8 +3893,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -66.50195, y: -109.88999}
-  m_SizeDelta: {x: 315.8052, y: 70.705}
+  m_AnchoredPosition: {x: 69.75, y: -109.88999}
+  m_SizeDelta: {x: 486.83, y: 70.705}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &662719744
 MonoBehaviour:
@@ -4414,6 +4414,9 @@ MonoBehaviour:
   Choice3Text: {fileID: 605420710}
   NameText: {fileID: 401356522}
   portratmanager: {fileID: 0}
+  DialogueActive: 0
+  activeDialogueIndexIntThing: 0
+  NextDialogue: 
 --- !u!4 &750215389
 Transform:
   m_ObjectHideFlags: 0
@@ -7289,8 +7292,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -382.3072, y: -109.89}
-  m_SizeDelta: {x: 315.8052, y: 70.705}
+  m_AnchoredPosition: {x: -417.08, y: -109.89}
+  m_SizeDelta: {x: 486.83, y: 70.705}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1550166595
 MonoBehaviour:
@@ -8059,8 +8062,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 133825377}
   - {fileID: 1245413219}
+  - {fileID: 133825377}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -5.439, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -9755,9 +9758,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4539018100729812022, guid: ba9199147aa40894ca7f66b182e48c40, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2064729283}
-    - targetCorrespondingSourceObject: {fileID: 4539018100729812022, guid: ba9199147aa40894ca7f66b182e48c40, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2064729288}
   m_SourcePrefab: {fileID: 100100000, guid: ba9199147aa40894ca7f66b182e48c40, type: 3}
 --- !u!1 &2064729282 stripped
 GameObject:
@@ -9820,19 +9820,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -2001288346551869137, guid: 14eaa2a056ff2704190094e88a955c04, type: 3}
---- !u!114 &2064729288
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2064729282}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a249acc919fbf464fa163e9e2e18ca8b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Dialogue
-  dialogueSO: {fileID: 11400000, guid: 74281db3fd7b0b84fbe656f4467dfe98, type: 2}
 --- !u!1001 &2071703258
 PrefabInstance:
   m_ObjectHideFlags: 0

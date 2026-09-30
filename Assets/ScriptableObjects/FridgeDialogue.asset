@@ -13,24 +13,77 @@ MonoBehaviour:
   m_Name: FridgeDialogue
   m_EditorClassIdentifier: Assembly-CSharp::DialogueSO
   ThingTalking: {fileID: 4539018100729812022, guid: d189f3145d1be2d478000ae4ffe578ad, type: 3}
-  TalkingThingOffset: {x: 0, y: -2.25, z: 3.5}
+  TalkingThingOffset: {x: -0.1, y: -1.53, z: 0.93}
   TalkingThingOffsetRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
-  TalkingThingScaleOffsetType: {x: 0, y: 0, z: 0}
+  TalkingThingScaleOffsetType: {x: 4.38, y: 1, z: 1}
   dialogues:
-  - conversationName: FirstFridge
-    person1Dialogue:
-    - Hello iM the Fridge
-    - Yeah I can Talk
-    - hello mr codey
-    - wanna open me and see whats inside?
-    - ok vro
-    - ikr
-    - ouch
+  - conversationName: 1
+    Speach:
+    - ThisSpeachIndex: 1
+      Blabber: Hello
+      ChoicesIndexInt: 0
+      NextSpeachIndexInt: 2
+    - ThisSpeachIndex: 2
+      Blabber: I Am The Fridge
+      ChoicesIndexInt: 0
+      NextSpeachIndexInt: 3
+    - ThisSpeachIndex: 3
+      Blabber: Ok vro
+      ChoicesIndexInt: 0
+      NextSpeachIndexInt: 1
     Choices:
     - choicesID: 1
       ThreeOptionText:
-      - YOU CAN TALK?!?!?!?!
-      - hello mr fridge
+      - '[Open The Fridge]'
+      - '[Walk Away]'
+      - Say Ur stinky
+      ThreeOptionEvents:
+      - m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 0}
+            m_TargetAssemblyTypeName: 
+            m_MethodName: 
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+      - m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 0}
+            m_TargetAssemblyTypeName: 
+            m_MethodName: 
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+      - m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 0}
+            m_TargetAssemblyTypeName: 
+            m_MethodName: 
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - choicesID: 
+      ThreeOptionText:
+      - cool
+      - weird..
       - ...
       ThreeOptionEvents:
       - m_PersistentCalls:
@@ -41,12 +94,48 @@ MonoBehaviour:
           m_Calls: []
     - choicesID: 2
       ThreeOptionText:
-      - cool
-      - weird..
-      - ...
+      - sure
+      - no
+      - 
       ThreeOptionEvents:
       - m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 0}
+            m_TargetAssemblyTypeName: 
+            m_MethodName: 
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+      - m_PersistentCalls:
           m_Calls: []
+      - m_PersistentCalls:
+          m_Calls: []
+    - choicesID: 3
+      ThreeOptionText:
+      - sure
+      - no
+      - 
+      ThreeOptionEvents:
+      - m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 0}
+            m_TargetAssemblyTypeName: 
+            m_MethodName: 
+            m_Mode: 0
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
       - m_PersistentCalls:
           m_Calls: []
       - m_PersistentCalls:
