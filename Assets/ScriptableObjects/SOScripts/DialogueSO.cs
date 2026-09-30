@@ -32,25 +32,28 @@ public class DialogueSO : ScriptableObject
         return null;
     }
 
-    public TalkingThingDialogue GetTalkingThingDialogueByName(string conversation, string name)
+    public TalkingThingDialogue GetTalkingThingDialogueByName(string conversationName, string speechID)
     {
-        foreach (TalkingThingDialogue speach in dialogues[int.Parse(conversation)].Speach)
+        Conversation conv = GetConversationByName(conversationName);
+        if (conv == null) return null;
+
+        foreach (TalkingThingDialogue speech in conv.Speach)
         {
-            if (speach.ThisSpeachIndex == name)
-            {
-                return speach;
-            }
+            if (speech.ThisSpeachIndex == speechID)
+                return speech;
         }
         return null;
     }
-    public Choicess GetChoicessByName(string conversation, string name)
+
+    public Choicess GetChoicessByName(string conversationName, string choicesID)
     {
-        foreach (Choicess choices in dialogues[int.Parse(conversation)].Choices)
+        Conversation conv = GetConversationByName(conversationName);
+        if (conv == null) return null;
+
+        foreach (Choicess choice in conv.Choices)
         {
-            if (choices.choicesID == name)
-            {
-                return choices;
-            }
+            if (choice.choicesID == choicesID)
+                return choice;
         }
         return null;
     }

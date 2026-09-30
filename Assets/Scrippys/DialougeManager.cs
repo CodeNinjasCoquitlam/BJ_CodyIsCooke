@@ -1,121 +1,197 @@
 using UnityEngine;
 using UnityEngine.UI;
-using static DialogueSO;
 
-public class DialougeManager : MonoBehaviour
+public class DialogueManager : MonoBehaviour
 {
-    [Header("GameObjects")]
-    public GameObject Portrait;
-    public GameObject Name;
+    [Header("UI Components")]
     public GameObject DialogueBOX;
+    public Text DialogueBoxTEXT;
+    public Text NameText;
+    public GameObject PressSpaceToSkip;
+
+    [Header("Choice UI")]
     public GameObject Choice1;
     public GameObject Choice2;
     public GameObject Choice3;
-    public GameObject PressSpaceToSkip;
-    public GameObject PortraitAnchor;
-    [Header("Texts")]
-    public Text DialogueBoxTEXT;
     public Text Choice1Text;
     public Text Choice2Text;
     public Text Choice3Text;
-    public Text NameText;
-    [Header("idk")]
-    public PortraitManager portratmanager;
-    public bool DialogueActive = false;
-    public int activeDialogueIndexIntThing;
-    string NextDialogue;
-    int CurrentSpeachIndex;
-    int CurrentConversationIndex;
-    DialogueSO ActiveDialogueSO;
+    public Button Choice1Button;
+    public Button Choice2Button;
+    public Button Choice3Button;
 
-    int NextDialogueIndex;
+    [Header("Portrait Setup")]
+    public GameObject PortraitAnchor;
+    public PortraitManager portraitManager;
+
+    [Header("State")]
+    public bool DialogueActive = false;
+
+    private DialogueSO activeDialogueSO;
+    private DialogueSO.Conversation currentConversation;
+    private DialogueSO.TalkingThingDialogue currentSpeech;
+    private bool standardChoicesActive = false;
+
     void Start()
     {
-        DialogueBOX.SetActive(false);
-        portratmanager = this.gameObject.GetComponent<PortraitManager>();
+        if (portraitManager == null)
+            portraitManager = GetComponent<PortraitManager>();
+
+        // Wire UI buttons as alternative input method
+        if (Choice1Button != null) Choice1Button.onClick.AddListener(() => SelectOption(0));
+        if (Choice2Button != null) Choice2Button.onClick.AddListener(() => SelectOption(1));
+        if (Choice3Button != null) Choice3Button.onClick.AddListener(() => SelectOption(2));
+
+        CloseDialogue();
     }
 
     void Update()
     {
+        if (!DialogueActive) return;
+
+        // Exit dialogue on Escape
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (DialogueActive)
+            CloseDialogue();
+            return;
+        }
+
+        // Handle Choice Selection via Number Keys (Keypad & Top Row)
+        if (standardChoicesActive)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
             {
-                CloseDialogue();
+                SelectOption(0);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2))
+            {
+                SelectOption(1);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3))
+            {
+                SelectOption(2);
             }
         }
-
-        if (Input.GetKeyDown(KeyCode.Keypad1)) 
+        else
         {
-
-        }
-        if (Input.GetKeyDown(KeyCode.Keypad2))
-        {
-            
-        }
-        if (Input.GetKeyDown(KeyCode.Keypad3))
-        {
-
-        }
-        if (Input.GetKeyDown(KeyCode.Space)) 
-        {
-            //get the next dialogue based on TalkingThingDialogue Next speech index
-            //set the next speach index based on the nextDialogue object
-
-            LoadChoices(ActiveDialogueSO, "", 0, NextDialogueIndex);
-
-            DialogueBoxTEXT.text = NextDialogue;
-            NextDialogueIndex = ActiveDialogueSO.dialogues[CurrentConversationIndex].Speach[CurrentSpeachIndex].NextSpeachIndexInt;
+            // Advance dialogue on Space when no choices are active
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                AdvanceDialogue();
+            }
         }
     }
 
-    public void InitiateDialouge(DialogueSO dialogueSO,string conversation, string speach)
+    public void InitiateDialogue(DialogueSO dialogueSO, string conversationName, string initialSpeechID)
     {
-        ActiveDialogueSO = dialogueSO;
-        if (!DialogueActive)
-        {
-            DialogueActive = true;
-            portratmanager.CreatePortrait(dialogueSO);
-            DialogueBOX.SetActive(true);
-            DialogueBoxTEXT.text = dialogueSO.GetTalkingThingDialogueByName(conversation, speach).Blabber;
+        if (dialogueSO == null) return;
 
-            LoadChoices(dialogueSO, conversation, dialogueSO.GetTalkingThingDialogueByName(conversation, speach).ChoicesIndexInt, int.Parse(speach));
+        activeDialogueSO = dialogueSO;
+        currentConversation = activeDialogueSO.GetConversationByName(conversationName);
+
+        if (currentConversation == null)
+        {
+            Debug.LogError($"Conversation '{conversationName}' not found in {dialogueSO.name}");
+            return;
         }
+
+        DialogueActive = true;
+        DialogueBOX.SetActive(true);
+
+        if (portraitManager != null)
+            portraitManager.CreatePortrait(dialogueSO);
+
+        DisplaySpeech(initialSpeechID);
     }
+
+    private void DisplaySpeech(string speechID)
+    {
+        currentSpeech = activeDialogueSO.GetTalkingThingDialogueByName(currentConversation.conversationName, speechID);
+
+        if (currentSpeech == null)
+        {
+            CloseDialogue();
+            return;
+        }
+
+        DialogueBoxTEXT.text = currentSpeech.Blabber;
+        UpdateChoices(currentSpeech.ChoicesIndexInt);
+    }
+
+    private void AdvanceDialogue()
+    {
+        if (currentSpeech == null || currentSpeech.NextSpeachIndexInt <= 0)
+        {
+            CloseDialogue();
+            return;
+        }
+
+        DisplaySpeech(currentSpeech.NextSpeachIndexInt.ToString());
+    }
+
+    private void UpdateChoices(int choicesID)
+    {
+        if (choicesID <= 0)
+        {
+            ToggleChoices(false);
+            return;
+        }
+
+        DialogueSO.Choicess choicesData = activeDialogueSO.GetChoicessByName(currentConversation.conversationName, choicesID.ToString());
+
+        if (choicesData == null || choicesData.ThreeOptionText == null)
+        {
+            ToggleChoices(false);
+            return;
+        }
+
+        ToggleChoices(true);
+
+        Choice1Text.text = choicesData.ThreeOptionText.Length > 0 ? "1: " + choicesData.ThreeOptionText[0] : "";
+        Choice2Text.text = choicesData.ThreeOptionText.Length > 1 ? "2: " + choicesData.ThreeOptionText[1] : "";
+        Choice3Text.text = choicesData.ThreeOptionText.Length > 2 ? "3: " + choicesData.ThreeOptionText[2] : "";
+    }
+
+    private void SelectOption(int optionIndex)
+    {
+        if (currentSpeech == null || !standardChoicesActive) return;
+
+        DialogueSO.Choicess choicesData = activeDialogueSO.GetChoicessByName(currentConversation.conversationName, currentSpeech.ChoicesIndexInt.ToString());
+
+        if (choicesData != null && choicesData.ThreeOptionEvents != null && optionIndex < choicesData.ThreeOptionEvents.Length)
+        {
+            choicesData.ThreeOptionEvents[optionIndex]?.Invoke();
+        }
+
+        AdvanceDialogue();
+    }
+
+    private void ToggleChoices(bool show)
+    {
+        standardChoicesActive = show;
+
+        if (Choice1 != null) Choice1.SetActive(show);
+        if (Choice2 != null) Choice2.SetActive(show);
+        if (Choice3 != null) Choice3.SetActive(show);
+        if (PressSpaceToSkip != null) PressSpaceToSkip.SetActive(!show);
+    }
+
     public void CloseDialogue()
-    {       
+    {
         DialogueActive = false;
-        portratmanager.ClearPortrait();
-        DialogueBOX.SetActive(false);
-        DialogueBoxTEXT.text = "";
-    }
+        standardChoicesActive = false;
+        currentConversation = null;
+        currentSpeech = null;
 
-    public void loadDialouge(int dialogueIndex, int SpeachIndex, DialogueSO dialogueSO)
-    {
-        DialogueBoxTEXT.text = dialogueSO.dialogues[dialogueIndex].Speach[SpeachIndex].Blabber;
-        CurrentSpeachIndex = SpeachIndex;
-    }
+        if (portraitManager != null)
+            portraitManager.ClearPortrait();
 
-    public void LoadChoices(DialogueSO dialogueSO, string conversation, int choices, int speach)
-    {
-        if (dialogueSO.GetTalkingThingDialogueByName(conversation, speach.ToString()).ChoicesIndexInt > 0)
-        {
-            Choice1.SetActive(true);
-            Choice2.SetActive(true);
-            Choice3.SetActive(true);
-            Choice1Text.text = dialogueSO.GetChoicessByName(conversation, choices.ToString()).ThreeOptionText[0];
-            Choice2Text.text = dialogueSO.GetChoicessByName(conversation, choices.ToString()).ThreeOptionText[1];
-            Choice3Text.text = dialogueSO.GetChoicessByName(conversation, choices.ToString()).ThreeOptionText[2];
-        }
-        else if (dialogueSO.GetTalkingThingDialogueByName(conversation, speach.ToString()).ChoicesIndexInt == 0)
-        {
-            Choice1.SetActive(false);
-            Choice2.SetActive(false);
-            Choice3.SetActive(false);
-        }
-        if (dialogueSO.GetTalkingThingDialogueByName(conversation, speach.ToString()).NextSpeachIndexInt > 0)
-        {
-            NextDialogue = dialogueSO.GetConversationByName(conversation).Speach[dialogueSO.GetTalkingThingDialogueByName(conversation, speach.ToString()).NextSpeachIndexInt].Blabber;
-        }
+        if (DialogueBOX != null)
+            DialogueBOX.SetActive(false);
+
+        if (DialogueBoxTEXT != null)
+            DialogueBoxTEXT.text = "";
+
+        ToggleChoices(false);
     }
 }
