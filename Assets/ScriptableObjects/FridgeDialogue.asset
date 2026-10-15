@@ -24,144 +24,80 @@ MonoBehaviour:
       ChoicesIndexInt: 0
       NextSpeachIndexInt: 2
     - ThisSpeachIndex: 2
-      Blabber: I Am The Fridge
+      Blabber: I am the fridge
       ChoicesIndexInt: 0
       NextSpeachIndexInt: 3
     - ThisSpeachIndex: 3
-      Blabber: Ok vro
+      Blabber: OPEN ME.. please
+      ChoicesIndexInt: 1
+      NextSpeachIndexInt: 0
+    - ThisSpeachIndex: 4
+      Blabber: ouch.. why?
       ChoicesIndexInt: 0
-      NextSpeachIndexInt: 1
+      NextSpeachIndexInt: 5
+    - ThisSpeachIndex: 5
+      Blabber: PLEASE OPEN MEEEEEEEEE
+      ChoicesIndexInt: 2
+      NextSpeachIndexInt: 0
     Choices:
     - choicesID: 1
       ThreeOptionText:
-      - '[Open The Fridge]'
+      - '[Open Fridge]'
+      - Say "What??? No!"
       - '[Walk Away]'
-      - Say Ur stinky
-      ThreeOptionEvents:
-      - m_PersistentCalls:
-          m_Calls:
-          - m_Target: {fileID: 0}
-            m_TargetAssemblyTypeName: 
-            m_MethodName: 
-            m_Mode: 0
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: 
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
-      - m_PersistentCalls:
-          m_Calls:
-          - m_Target: {fileID: 0}
-            m_TargetAssemblyTypeName: 
-            m_MethodName: 
-            m_Mode: 0
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: 
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
-      - m_PersistentCalls:
-          m_Calls:
-          - m_Target: {fileID: 0}
-            m_TargetAssemblyTypeName: 
-            m_MethodName: 
-            m_Mode: 0
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: 
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
-    - choicesID: 
-      ThreeOptionText:
-      - cool
-      - weird..
-      - ...
       ThreeOptionEvents:
       - m_PersistentCalls:
           m_Calls: []
       - m_PersistentCalls:
-          m_Calls: []
+          m_Calls:
+          - m_Target: {fileID: 0}
+            m_TargetAssemblyTypeName: DialogueManager, Assembly-CSharp
+            m_MethodName: JumpToDialogue
+            m_Mode: 5
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 4
+              m_BoolArgument: 0
+            m_CallState: 2
       - m_PersistentCalls:
-          m_Calls: []
+          m_Calls:
+          - m_Target: {fileID: 0}
+            m_TargetAssemblyTypeName: DialogueManager, Assembly-CSharp
+            m_MethodName: CloseDialogue
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
     - choicesID: 2
       ThreeOptionText:
-      - sure
-      - no
-      - 
+      - '[Open Fridge]'
+      - '[Open Fridge The Sequel]'
+      - '[Walk Away]'
       ThreeOptionEvents:
+      - m_PersistentCalls:
+          m_Calls: []
+      - m_PersistentCalls:
+          m_Calls: []
       - m_PersistentCalls:
           m_Calls:
           - m_Target: {fileID: 0}
-            m_TargetAssemblyTypeName: 
-            m_MethodName: 
-            m_Mode: 0
+            m_TargetAssemblyTypeName: DialogueManager, Assembly-CSharp
+            m_MethodName: CloseDialogue
+            m_Mode: 1
             m_Arguments:
               m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: 
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
               m_IntArgument: 0
               m_FloatArgument: 0
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
-      - m_PersistentCalls:
-          m_Calls: []
-      - m_PersistentCalls:
-          m_Calls: []
-    - choicesID: 3
-      ThreeOptionText:
-      - sure
-      - no
-      - 
-      ThreeOptionEvents:
-      - m_PersistentCalls:
-          m_Calls:
-          - m_Target: {fileID: 0}
-            m_TargetAssemblyTypeName: 
-            m_MethodName: 
-            m_Mode: 0
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: 
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
-      - m_PersistentCalls:
-          m_Calls: []
-      - m_PersistentCalls:
-          m_Calls: []
-    - choicesID: 3
-      ThreeOptionText:
-      - sure
-      - no
-      - 
-      ThreeOptionEvents:
-      - m_PersistentCalls:
-          m_Calls:
-          - m_Target: {fileID: 0}
-            m_TargetAssemblyTypeName: 
-            m_MethodName: 
-            m_Mode: 0
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: 
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
-      - m_PersistentCalls:
-          m_Calls: []
-      - m_PersistentCalls:
-          m_Calls: []
   RandomFIRSTDialogues: []

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using Unity.VisualScripting;
 
 public class Interact : MonoBehaviour
 {
@@ -17,15 +18,18 @@ public class Interact : MonoBehaviour
     public UnityEvent onInteract;
     [Header("Bool")]
     public bool IsInRange = false;
+    [Header("IS MAYONNAISE AN INSTRUMENT?")]
+    private DialogueManager gameymanagery;
 
     void Start()
     {
         TextObject.SetActive(false);
+        gameymanagery = GameObject.Find("GameManager").GetComponent<DialogueManager>();
     }
 
     void Update()
     {
-        if (IsInRange == true && Input.GetKeyDown(KeyCodeToPress))
+        if (IsInRange == true && Input.GetKeyDown(KeyCodeToPress) && gameymanagery.DialogueActive == false)
         {
             onInteract.Invoke();
         }

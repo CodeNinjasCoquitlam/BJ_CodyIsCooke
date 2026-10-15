@@ -37,7 +37,7 @@ public class DialogueManager : MonoBehaviour
         if (portraitManager == null)
             portraitManager = GetComponent<PortraitManager>();
 
-        // Wire UI buttons as alternative input method
+        
         if (Choice1Button != null) Choice1Button.onClick.AddListener(() => SelectOption(0));
         if (Choice2Button != null) Choice2Button.onClick.AddListener(() => SelectOption(1));
         if (Choice3Button != null) Choice3Button.onClick.AddListener(() => SelectOption(2));
@@ -55,7 +55,6 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        // Handle Choice Selection via Number Keys (Keypad & Top Row)
         if (standardChoicesActive)
         {
             if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
@@ -73,13 +72,13 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
-            // Advance dialogue on Space when no choices are active
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 AdvanceDialogue();
             }
         }
     }
+
 
     public void InitiateDialogue(DialogueSO dialogueSO, string conversationName, string initialSpeechID)
     {
@@ -94,22 +93,28 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
+        if (portraitManager != null && !DialogueActive)
+            portraitManager.CreatePortrait(dialogueSO);
+
         DialogueActive = true;
         DialogueBOX.SetActive(true);
-
-        if (portraitManager != null)
-            portraitManager.CreatePortrait(dialogueSO);
 
         DisplaySpeech(initialSpeechID);
     }
 
-    /// <summary>
-    /// Call this function inside UnityEvents (e.g. choice events) to jump to a specific 
-    /// conversation and speech ID, with an optional new DialogueSO.
-    /// </summary>
+    public void JumpToDialogue(string speechID)
+    {
+        JumpToDialogue(activeDialogueSO, currentConversation.conversationName, speechID);
+    }
+
+    public void JumpToDialogue(DialogueObjet objet)
+    {
+
+    }
+
     public void JumpToDialogue(DialogueSO newSO, string conversationName, string speechID)
     {
-        // If a new DialogueSO is assigned, switch to it and recreate the portrait
+       
         if (newSO != null && newSO != activeDialogueSO)
         {
             activeDialogueSO = newSO;
@@ -141,9 +146,6 @@ public class DialogueManager : MonoBehaviour
         DisplaySpeech(speechID);
     }
 
-    /// <summary>
-    /// Overload for JumpToDialogue when staying on the currently active DialogueSO.
-    /// </summary>
     public void JumpToDialogueSameSO(string conversationName, string speechID)
     {
         JumpToDialogue(null, conversationName, speechID);
@@ -152,7 +154,7 @@ public class DialogueManager : MonoBehaviour
     private void DisplaySpeech(string speechID)
     {
         currentSpeech = activeDialogueSO.GetTalkingThingDialogueByName(currentConversation.conversationName, speechID);
-
+        //Debug.Log($"loading dialogue {currentSpeech} at ID {speechID}");
         if (currentSpeech == null)
         {
             CloseDialogue();
@@ -167,11 +169,12 @@ public class DialogueManager : MonoBehaviour
     {
         if (currentSpeech == null || currentSpeech.NextSpeachIndexInt <= 0)
         {
-            CloseDialogue();
+            UpdateChoices(currentSpeech.ChoicesIndexInt);
             return;
         }
 
         DisplaySpeech(currentSpeech.NextSpeachIndexInt.ToString());
+    
     }
 
     private void UpdateChoices(int choicesID)
@@ -203,7 +206,7 @@ public class DialogueManager : MonoBehaviour
 
         DialogueSO.Choicess choicesData = activeDialogueSO.GetChoicessByName(currentConversation.conversationName, currentSpeech.ChoicesIndexInt.ToString());
 
-        // Store active speech before invoking event in case an event calls JumpToDialogue
+
         DialogueSO.TalkingThingDialogue cachedSpeech = currentSpeech;
 
         if (choicesData != null && choicesData.ThreeOptionEvents != null && optionIndex < choicesData.ThreeOptionEvents.Length)
@@ -211,7 +214,7 @@ public class DialogueManager : MonoBehaviour
             choicesData.ThreeOptionEvents[optionIndex]?.Invoke();
         }
 
-        // Only auto-advance if the choice event didn't trigger a JumpToDialogue call
+ 
         if (currentSpeech == cachedSpeech)
         {
             AdvanceDialogue();
@@ -246,4 +249,12 @@ public class DialogueManager : MonoBehaviour
 
         ToggleChoices(false);
     }
+}
+
+[System.Serializable]
+public class DialogueObjet
+{
+    DialogueSO dso;
+    string convoID;
+    string speechId;
 }
