@@ -68,11 +68,20 @@ public class DialogueSO : ScriptableObject
         [Header("Option Text")]
         public string[] ThreeOptionText;
 
-        [Header("Data-Driven Jumps: Speech ID to jump to when option is clicked (leave blank if ending)")]
-        public string[] TargetSpeechIDs;
+        [Header("Data-Driven Jumps: Where each option leads")]
+        public DialogueJumpTarget[] ChoiceJumps;
 
         [Header("Functions from unity that u can run (for gameplay side-effects)")]
         public UnityEvent[] ThreeOptionEvents;
+    }
+
+    [System.Serializable]
+    public class DialogueJumpTarget
+    {
+        [Tooltip("Leave blank to stay in the current conversation.")]
+        public string targetConversationName;
+        [Tooltip("Speech ID to jump to (leave blank to close dialogue).")]
+        public string targetSpeechID;
     }
 
     [System.Serializable]

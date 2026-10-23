@@ -208,19 +208,25 @@ public class DialogueManager : MonoBehaviour
 
         if (choicesData == null) return;
 
-        // 1. Invoke custom UnityEvent first (for gameplay actions like giving gold, opening shop, etc.)
+        // 1. Invoke custom UnityEvent first (for gameplay side-effects like items/gold)
         if (choicesData.ThreeOptionEvents != null && optionIndex < choicesData.ThreeOptionEvents.Length)
         {
             choicesData.ThreeOptionEvents[optionIndex]?.Invoke();
         }
 
-        // 2. Handle Data-Driven Dialogue Branching automatically!
-        if (choicesData.TargetSpeechIDs != null && optionIndex < choicesData.TargetSpeechIDs.Length)
+        // 2. Handle Data-Driven Dialogue Jumps
+        if (choicesData.ChoiceJumps != null && optionIndex < choicesData.ChoiceJumps.Length)
         {
-            string targetID = choicesData.TargetSpeechIDs[optionIndex];
-            if (!string.IsNullOrEmpty(targetID))
+            DialogueSO.DialogueJumpTarget jump = choicesData.ChoiceJumps[optionIndex];
+
+            if (jump != null && !string.IsNullOrEmpty(jump.targetSpeechID))
             {
-                DisplaySpeech(targetID);
+                // If targetConversationName is empty, keep current conversation name
+                string targetConvo = string.IsNullOrEmpty(jump.targetConversationName)
+                    ? currentConversation.conversationName
+                    : jump.targetConversationName;
+
+                JumpToDialogueSameSO(targetConvo, jump.targetSpeechID);
                 return;
             }
         }
