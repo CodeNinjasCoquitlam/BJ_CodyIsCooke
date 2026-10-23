@@ -1,29 +1,45 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class DialogueHolder : MonoBehaviour
 {
     public DialogueSO dialogueSO;
-    public ChoicePair[] pairs;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public List<ChoiceEventPair> eventPairs;
 
     public DialogueSO GetDialogueSO()
     {
-        foreach (ChoicePair pair in pairs)
+        if (dialogueSO == null) return null;
+
+        // Inject scene events into the ScriptableObject safely by matching string IDs
+        foreach (ChoiceEventPair pair in eventPairs)
         {
-            DialogueSO.Conversation convo = dialogueSO.dialogues[pair.convoIndex];
-            DialogueSO.Choicess choices = convo.Choices[pair.choiceIndex];
-            choices.ThreeOptionEvents[pair.optionIndex] = pair.choiceEvent;
+            foreach (DialogueSO.Conversation convo in dialogueSO.dialogues)
+            {
+                foreach (DialogueSO.Choicess choice in convo.Choices)
+                {
+                    if (choice.choicesID == pair.choicesID)
+                    {
+                        if (choice.ThreeOptionEvents == null || choice.ThreeOptionEvents.Length <= pair.optionIndex)
+                        {
+                            System.Array.Resize(ref choice.ThreeOptionEvents, pair.optionIndex + 1);
+                        }
+                        choice.ThreeOptionEvents[pair.optionIndex] = pair.choiceEvent;
+                    }
+                }
+            }
         }
         return dialogueSO;
     }
 }
 
 [System.Serializable]
-public class ChoicePair
+public class ChoiceEventPair
 {
-    public int convoIndex;
-    public int choiceIndex;
+    [Header("Match Choice By ID (e.g., '1' or 'ShopChoices')")]
+    public string choicesID;
+    [Header("Option 0, 1, or 2")]
     public int optionIndex;
+    [Header("Function to run in the scene")]
     public UnityEvent choiceEvent;
 }

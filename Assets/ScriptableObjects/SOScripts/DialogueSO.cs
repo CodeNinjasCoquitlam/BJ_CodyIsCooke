@@ -2,11 +2,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
-using static UnityEngine.Splines.SplineInstantiate;
 
 [CreateAssetMenu(fileName = "DialogueSO", menuName = "Scriptable Objects Dialogue/Dialogue SO")]
-
 public class DialogueSO : ScriptableObject
 {
     [Header("Portrait Settings")]
@@ -14,7 +11,6 @@ public class DialogueSO : ScriptableObject
     public Vector3 TalkingThingOffset;
     public Quaternion TalkingThingOffsetRotation;
     public Vector3 TalkingThingScaleOffsetType;
-
 
     [Header("Dialogues")]
     public Conversation[] dialogues;
@@ -24,10 +20,7 @@ public class DialogueSO : ScriptableObject
     {
         foreach (Conversation conversation in dialogues)
         {
-            if (conversation.conversationName == name)
-            {
-                return conversation;
-            }
+            if (conversation.conversationName == name) return conversation;
         }
         return null;
     }
@@ -39,8 +32,7 @@ public class DialogueSO : ScriptableObject
 
         foreach (TalkingThingDialogue speech in conv.Speach)
         {
-            if (speech.ThisSpeachIndex == speechID)
-                return speech;
+            if (speech.ThisSpeachIndex == speechID) return speech;
         }
         return null;
     }
@@ -52,8 +44,7 @@ public class DialogueSO : ScriptableObject
 
         foreach (Choicess choice in conv.Choices)
         {
-            if (choice.choicesID == choicesID)
-                return choice;
+            if (choice.choicesID == choicesID) return choice;
         }
         return null;
     }
@@ -65,7 +56,7 @@ public class DialogueSO : ScriptableObject
         public string conversationName;
         [Header("What The thing talking is saying")]
         public TalkingThingDialogue[] Speach;
-        [Header("what the player can say back")]
+        [Header("What the player can say back")]
         public Choicess[] Choices;
     }
 
@@ -74,9 +65,13 @@ public class DialogueSO : ScriptableObject
     {
         [Header("Id Of this Set Of choices")]
         public string choicesID;
-        [Header("what the player can say or do as options (MAKE SURE TO ADD (Say Hello) or (Walk Away)))")]
+        [Header("Option Text")]
         public string[] ThreeOptionText;
-        [Header("Functions from unity that u can run")]
+
+        [Header("Data-Driven Jumps: Speech ID to jump to when option is clicked (leave blank if ending)")]
+        public string[] TargetSpeechIDs;
+
+        [Header("Functions from unity that u can run (for gameplay side-effects)")]
         public UnityEvent[] ThreeOptionEvents;
     }
 

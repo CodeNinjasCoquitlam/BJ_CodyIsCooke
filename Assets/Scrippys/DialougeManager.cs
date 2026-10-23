@@ -206,19 +206,27 @@ public class DialogueManager : MonoBehaviour
 
         DialogueSO.Choicess choicesData = activeDialogueSO.GetChoicessByName(currentConversation.conversationName, currentSpeech.ChoicesIndexInt.ToString());
 
+        if (choicesData == null) return;
 
-        DialogueSO.TalkingThingDialogue cachedSpeech = currentSpeech;
-
-        if (choicesData != null && choicesData.ThreeOptionEvents != null && optionIndex < choicesData.ThreeOptionEvents.Length)
+        // 1. Invoke custom UnityEvent first (for gameplay actions like giving gold, opening shop, etc.)
+        if (choicesData.ThreeOptionEvents != null && optionIndex < choicesData.ThreeOptionEvents.Length)
         {
             choicesData.ThreeOptionEvents[optionIndex]?.Invoke();
         }
 
- 
-        if (currentSpeech == cachedSpeech)
+        // 2. Handle Data-Driven Dialogue Branching automatically!
+        if (choicesData.TargetSpeechIDs != null && optionIndex < choicesData.TargetSpeechIDs.Length)
         {
-            AdvanceDialogue();
+            string targetID = choicesData.TargetSpeechIDs[optionIndex];
+            if (!string.IsNullOrEmpty(targetID))
+            {
+                DisplaySpeech(targetID);
+                return;
+            }
         }
+
+        // Fallback: If no target speech ID is set, close the dialogue
+        CloseDialogue();
     }
 
     private void ToggleChoices(bool show)
