@@ -71,7 +71,7 @@ public class DialogueSO : ScriptableObject
         [Header("Data-Driven Jumps: Where each option leads")]
         public DialogueJumpTarget[] ChoiceJumps;
 
-        [Header("Functions from unity that u can run (for gameplay side-effects)")]
+        [Header("!!DEPRECATED!! UNLESS FUNCTION IS ATTACHED TO PREFAB USE DIALOGUE HOLDER TO INJECT INTO FROM HIERARCHY")]
         public UnityEvent[] ThreeOptionEvents;
     }
 

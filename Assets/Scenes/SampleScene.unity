@@ -1768,7 +1768,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -526.57, y: 113}
+  m_AnchoredPosition: {x: -406.29, y: 110.93}
   m_SizeDelta: {x: 267.8423, y: 71.3176}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &401356522
@@ -2345,7 +2345,6 @@ Transform:
   - {fileID: 2108223854}
   - {fileID: 595289977}
   - {fileID: 1855798333}
-  - {fileID: 1820456069}
   - {fileID: 1290567921}
   - {fileID: 296658199}
   - {fileID: 678222968}
@@ -3322,8 +3321,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 556.58, y: -109.89}
-  m_SizeDelta: {x: 486.83, y: 70.705}
+  m_AnchoredPosition: {x: 582.5, y: -114.65}
+  m_SizeDelta: {x: 435, y: 70.705}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &605420710
 MonoBehaviour:
@@ -3893,8 +3892,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 69.75, y: -109.88999}
-  m_SizeDelta: {x: 486.83, y: 70.705}
+  m_AnchoredPosition: {x: 129.9, y: -114.65}
+  m_SizeDelta: {x: 470.21, y: 70.705}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &662719744
 MonoBehaviour:
@@ -5819,25 +5818,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   dialogueSO: {fileID: 11400000, guid: 74281db3fd7b0b84fbe656f4467dfe98, type: 2}
-  pairs:
-  - convoIndex: 0
-    choiceIndex: 0
-    optionIndex: 0
-    choiceEvent:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: 
-          m_MethodName: 
-          m_Mode: 0
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: 
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+  eventPairs: []
 --- !u!4 &1158135124
 Transform:
   m_ObjectHideFlags: 0
@@ -7353,8 +7334,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -417.08, y: -109.89}
-  m_SizeDelta: {x: 486.83, y: 70.705}
+  m_AnchoredPosition: {x: -322.71, y: -114.65}
+  m_SizeDelta: {x: 435, y: 70.705}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1550166595
 MonoBehaviour:
@@ -8544,11 +8525,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6aa2d3c9e99bef54ab0984ca866bf171, type: 3}
---- !u!4 &1820456069 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3870285625942986380, guid: ba9199147aa40894ca7f66b182e48c40, type: 3}
-  m_PrefabInstance: {fileID: 2064729281}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1836441141
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9731,7 +9707,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 451921734}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3870285625942986380, guid: ba9199147aa40894ca7f66b182e48c40, type: 3}
       propertyPath: m_LocalScale.x
@@ -9747,15 +9723,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3870285625942986380, guid: ba9199147aa40894ca7f66b182e48c40, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -25.34341
+      value: -12.27
       objectReference: {fileID: 0}
     - target: {fileID: 3870285625942986380, guid: ba9199147aa40894ca7f66b182e48c40, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.02137953
+      value: 0.52137953
       objectReference: {fileID: 0}
     - target: {fileID: 3870285625942986380, guid: ba9199147aa40894ca7f66b182e48c40, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.10149002
+      value: 19.93
       objectReference: {fileID: 0}
     - target: {fileID: 3870285625942986380, guid: ba9199147aa40894ca7f66b182e48c40, type: 3}
       propertyPath: m_LocalRotation.w
@@ -9853,8 +9829,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2064729288}
-        m_TargetAssemblyTypeName: StartDialogue, Assembly-CSharp
-        m_MethodName: DoDialogue
+        m_TargetAssemblyTypeName: DialogueTrigger, Assembly-CSharp
+        m_MethodName: TriggerDialogue
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9899,9 +9875,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8570daa0e2b029b468b3e8cfc6a07744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StartDialogue
-  dialogueHolder: {fileID: 2064729289}
-  jame: 
-  id: 1
+  conversationName: Inital
+  initialSpeechID: 1
 --- !u!114 &2064729289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9914,75 +9889,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67741f4e077ae8446998468083c2e338, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueHolder
-  dialogueSO: {fileID: 11400000, guid: 74281db3fd7b0b84fbe656f4467dfe98, type: 2}
-  pairs:
-  - convoIndex: 0
-    choiceIndex: 0
+  dialogueSO: {fileID: 11400000, guid: 91d5f96649086fb4497990871e34bc90, type: 2}
+  eventPairs:
+  - ConversationID: Inital
+    choicesID: 3
     optionIndex: 0
     choiceEvent:
       m_PersistentCalls:
-        m_Calls: []
-  - convoIndex: 0
-    choiceIndex: 0
-    optionIndex: 1
-    choiceEvent:
-      m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 750215388}
-          m_TargetAssemblyTypeName: DialogueManager, Assembly-CSharp
-          m_MethodName: JumpToDialogue
-          m_Mode: 5
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: 
+          m_MethodName: 
+          m_Mode: 0
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 4
-            m_BoolArgument: 0
-          m_CallState: 2
-  - convoIndex: 0
-    choiceIndex: 0
-    optionIndex: 2
-    choiceEvent:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 750215388}
-          m_TargetAssemblyTypeName: DialogueManager, Assembly-CSharp
-          m_MethodName: CloseDialogue
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - convoIndex: 0
-    choiceIndex: 1
-    optionIndex: 0
-    choiceEvent:
-      m_PersistentCalls:
-        m_Calls: []
-  - convoIndex: 0
-    choiceIndex: 1
-    optionIndex: 1
-    choiceEvent:
-      m_PersistentCalls:
-        m_Calls: []
-  - convoIndex: 0
-    choiceIndex: 1
-    optionIndex: 2
-    choiceEvent:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 750215388}
-          m_TargetAssemblyTypeName: DialogueManager, Assembly-CSharp
-          m_MethodName: CloseDialogue
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_ObjectArgumentAssemblyTypeName: 
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
@@ -10079,6 +10000,7 @@ SceneRoots:
   - {fileID: 15250107}
   - {fileID: 451921734}
   - {fileID: 1314713811}
+  - {fileID: 2064729281}
   - {fileID: 1724877496}
   - {fileID: 1566238927}
   - {fileID: 1853307925}

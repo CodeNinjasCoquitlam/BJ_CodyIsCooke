@@ -1,3 +1,5 @@
+using JetBrains.Annotations;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -161,7 +163,13 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        DialogueBoxTEXT.text = currentSpeech.Blabber;
+        //DialogueBoxTEXT.text = currentSpeech.Blabber;
+        char[] arrayoftexttobeplaceinthetextbox1x1 = currentSpeech.Blabber.ToCharArray();
+        for (int i = 0;i < arrayoftexttobeplaceinthetextbox1x1.Length; i++)
+        {
+            DialogueBoxTEXT.text += arrayoftexttobeplaceinthetextbox1x1[i];
+            Thread.Sleep(200);
+        }
         UpdateChoices(currentSpeech.ChoicesIndexInt);
     }
 
