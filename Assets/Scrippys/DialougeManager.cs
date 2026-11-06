@@ -1,5 +1,6 @@
 using JetBrains.Annotations;
 using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -33,6 +34,8 @@ public class DialogueManager : MonoBehaviour
     private DialogueSO.Conversation currentConversation;
     private DialogueSO.TalkingThingDialogue currentSpeech;
     private bool standardChoicesActive = false;
+  /*  private bool ActivlyLayingOutText = false;
+    private bool layoutCancled = false;*/
 
     void Start()
     {
@@ -79,6 +82,17 @@ public class DialogueManager : MonoBehaviour
                 AdvanceDialogue();
             }
         }
+        /*if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (ActivlyLayingOutText)
+            {
+                layoutCancled = true;
+                DialogueBoxTEXT.text = "";
+                DialogueBoxTEXT.text = currentSpeech.Blabber;
+                ActivlyLayingOutText = false;
+                layoutCancled = false;
+            }
+        }*/
     }
 
 
@@ -100,18 +114,13 @@ public class DialogueManager : MonoBehaviour
 
         DialogueActive = true;
         DialogueBOX.SetActive(true);
-
+        
         DisplaySpeech(initialSpeechID);
     }
 
     public void JumpToDialogue(string speechID)
     {
         JumpToDialogue(activeDialogueSO, currentConversation.conversationName, speechID);
-    }
-
-    public void JumpToDialogue(DialogueObjet objet)
-    {
-
     }
 
     public void JumpToDialogue(DialogueSO newSO, string conversationName, string speechID)
@@ -153,7 +162,7 @@ public class DialogueManager : MonoBehaviour
         JumpToDialogue(null, conversationName, speechID);
     }
 
-    private void DisplaySpeech(string speechID)
+    private async Task DisplaySpeech(string speechID)
     {
         currentSpeech = activeDialogueSO.GetTalkingThingDialogueByName(currentConversation.conversationName, speechID);
         //Debug.Log($"loading dialogue {currentSpeech} at ID {speechID}");
@@ -163,13 +172,19 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        //DialogueBoxTEXT.text = currentSpeech.Blabber;
+        ToggleChoices(false);
+        DialogueBoxTEXT.text = "";
         char[] arrayoftexttobeplaceinthetextbox1x1 = currentSpeech.Blabber.ToCharArray();
+        /*ActivlyLayingOutText = true;*/
         for (int i = 0;i < arrayoftexttobeplaceinthetextbox1x1.Length; i++)
         {
-            DialogueBoxTEXT.text += arrayoftexttobeplaceinthetextbox1x1[i];
-            Thread.Sleep(200);
+            /*if (!layoutCancled)
+            {*/
+                DialogueBoxTEXT.text += arrayoftexttobeplaceinthetextbox1x1[i];
+                await Task.Delay(Random.Range(10, 30));
+            /*}*/
         }
+        /*ActivlyLayingOutText = false;*/
         UpdateChoices(currentSpeech.ChoicesIndexInt);
     }
 
@@ -180,10 +195,8 @@ public class DialogueManager : MonoBehaviour
             UpdateChoices(currentSpeech.ChoicesIndexInt);
             return;
         }
-
-        DisplaySpeech(currentSpeech.NextSpeachIndexInt.ToString());
-    
-    }
+            DisplaySpeech(currentSpeech.NextSpeachIndexInt.ToString());
+        }
 
     private void UpdateChoices(int choicesID)
     {
