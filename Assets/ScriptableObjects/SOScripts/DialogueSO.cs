@@ -6,6 +6,8 @@ using UnityEngine.Events;
 [CreateAssetMenu(fileName = "DialogueSO", menuName = "Scriptable Objects Dialogue/Dialogue SO")]
 public class DialogueSO : ScriptableObject
 {
+    [Header("SoundFont Settings")]
+    public AudioClip talkAudio;
     [Header("Portrait Settings")]
     public GameObject ThingTalking;
     public Vector3 TalkingThingOffset;

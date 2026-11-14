@@ -1,8 +1,10 @@
 using JetBrains.Annotations;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
+
 
 public class DialogueManager : MonoBehaviour
 {
@@ -34,19 +36,21 @@ public class DialogueManager : MonoBehaviour
     private DialogueSO.Conversation currentConversation;
     private DialogueSO.TalkingThingDialogue currentSpeech;
     private bool standardChoicesActive = false;
-  /*  private bool ActivlyLayingOutText = false;
-    private bool layoutCancled = false;*/
+    private string regx = "^[a-zA-Z0-9]*$";
+    private AudioSource sourceDeLaAudiose;
+    /*  private bool ActivlyLayingOutText = false;
+      private bool layoutCancled = false;*/
 
     void Start()
     {
         if (portraitManager == null)
             portraitManager = GetComponent<PortraitManager>();
 
-        
+
         if (Choice1Button != null) Choice1Button.onClick.AddListener(() => SelectOption(0));
         if (Choice2Button != null) Choice2Button.onClick.AddListener(() => SelectOption(1));
         if (Choice3Button != null) Choice3Button.onClick.AddListener(() => SelectOption(2));
-
+        sourceDeLaAudiose = GameObject.FindWithTag("Player").GetComponent<AudioSource>();
         CloseDialogue();
     }
 
@@ -114,7 +118,7 @@ public class DialogueManager : MonoBehaviour
 
         DialogueActive = true;
         DialogueBOX.SetActive(true);
-        
+
         DisplaySpeech(initialSpeechID);
     }
 
@@ -125,7 +129,7 @@ public class DialogueManager : MonoBehaviour
 
     public void JumpToDialogue(DialogueSO newSO, string conversationName, string speechID)
     {
-       
+
         if (newSO != null && newSO != activeDialogueSO)
         {
             activeDialogueSO = newSO;
@@ -175,13 +179,19 @@ public class DialogueManager : MonoBehaviour
         ToggleChoices(false);
         DialogueBoxTEXT.text = "";
         char[] arrayoftexttobeplaceinthetextbox1x1 = currentSpeech.Blabber.ToCharArray();
+        Regex r = new Regex(regx);
         /*ActivlyLayingOutText = true;*/
-        for (int i = 0;i < arrayoftexttobeplaceinthetextbox1x1.Length; i++)
+        for (int i = 0; i < arrayoftexttobeplaceinthetextbox1x1.Length; i++)
         {
             /*if (!layoutCancled)
             {*/
-                DialogueBoxTEXT.text += arrayoftexttobeplaceinthetextbox1x1[i];
-                await Task.Delay(Random.Range(10, 30));
+            DialogueBoxTEXT.text += arrayoftexttobeplaceinthetextbox1x1[i];
+            if (r.IsMatch(arrayoftexttobeplaceinthetextbox1x1[i].ToString()))
+            {
+                sourceDeLaAudiose.clip = activeDialogueSO.talkAudio;
+                sourceDeLaAudiose.Play();
+            }
+            await Task.Delay(/*Random.Range(10, 30)*/ (int)activeDialogueSO.talkAudio.length/* * 1000*/);
             /*}*/
         }
         /*ActivlyLayingOutText = false;*/
@@ -195,8 +205,8 @@ public class DialogueManager : MonoBehaviour
             UpdateChoices(currentSpeech.ChoicesIndexInt);
             return;
         }
-            DisplaySpeech(currentSpeech.NextSpeachIndexInt.ToString());
-        }
+        DisplaySpeech(currentSpeech.NextSpeachIndexInt.ToString());
+    }
 
     private void UpdateChoices(int choicesID)
     {

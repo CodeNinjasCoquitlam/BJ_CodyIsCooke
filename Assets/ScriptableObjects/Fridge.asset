@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdead6b77220aa1418b9a4746aae5586, type: 3}
   m_Name: Fridge
   m_EditorClassIdentifier: Assembly-CSharp::DialogueSO
+  talkAudio: {fileID: 8300000, guid: 05aaa854f70f1a94eb5f673a8e86c965, type: 3}
   ThingTalking: {fileID: 4539018100729812022, guid: d189f3145d1be2d478000ae4ffe578ad, type: 3}
   TalkingThingOffset: {x: 0, y: -1.5, z: 0.8}
   TalkingThingOffsetRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
