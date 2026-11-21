@@ -1,10 +1,7 @@
-using JetBrains.Annotations;
-using System.Threading;
-using System.Threading.Tasks;
+using System.Collections;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
-
 
 public class DialogueManager : MonoBehaviour
 {
@@ -29,6 +26,12 @@ public class DialogueManager : MonoBehaviour
     public GameObject PortraitAnchor;
     private PortraitManager portraitManager;
 
+    [Header("Typewriter Settings")]
+    [Tooltip("Fallback delay in seconds per character if talkAudio is missing.")]
+    public float fallbackCharDelay = 0.04f;
+    [Tooltip("Minimum delay in seconds per character even if talkAudio is very short.")]
+    public float minCharDelay = 0.03f;
+
     [Header("State")]
     public bool DialogueActive = false;
 
@@ -36,21 +39,22 @@ public class DialogueManager : MonoBehaviour
     private DialogueSO.Conversation currentConversation;
     private DialogueSO.TalkingThingDialogue currentSpeech;
     private bool standardChoicesActive = false;
-    private string regx = "^[a-zA-Z0-9]*$";
     private AudioSource sourceDeLaAudiose;
-    /*  private bool ActivlyLayingOutText = false;
-      private bool layoutCancled = false;*/
+    private Coroutine typingCoroutine;
 
     void Start()
     {
         if (portraitManager == null)
             portraitManager = GetComponent<PortraitManager>();
 
-
         if (Choice1Button != null) Choice1Button.onClick.AddListener(() => SelectOption(0));
         if (Choice2Button != null) Choice2Button.onClick.AddListener(() => SelectOption(1));
         if (Choice3Button != null) Choice3Button.onClick.AddListener(() => SelectOption(2));
-        sourceDeLaAudiose = GameObject.FindWithTag("Player").GetComponent<AudioSource>();
+
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null)
+            sourceDeLaAudiose = player.GetComponent<AudioSource>();
+
         CloseDialogue();
     }
 
@@ -67,17 +71,11 @@ public class DialogueManager : MonoBehaviour
         if (standardChoicesActive)
         {
             if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
-            {
                 SelectOption(0);
-            }
             else if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2))
-            {
                 SelectOption(1);
-            }
             else if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3))
-            {
                 SelectOption(2);
-            }
         }
         else
         {
@@ -86,19 +84,7 @@ public class DialogueManager : MonoBehaviour
                 AdvanceDialogue();
             }
         }
-        /*if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (ActivlyLayingOutText)
-            {
-                layoutCancled = true;
-                DialogueBoxTEXT.text = "";
-                DialogueBoxTEXT.text = currentSpeech.Blabber;
-                ActivlyLayingOutText = false;
-                layoutCancled = false;
-            }
-        }*/
     }
-
 
     public void InitiateDialogue(DialogueSO dialogueSO, string conversationName, string initialSpeechID)
     {
@@ -117,19 +103,24 @@ public class DialogueManager : MonoBehaviour
             portraitManager.CreatePortrait(dialogueSO);
 
         DialogueActive = true;
-        DialogueBOX.SetActive(true);
+        if (DialogueBOX != null) DialogueBOX.SetActive(true);
 
-        DisplaySpeech(initialSpeechID);
+        StartDisplaySpeech(initialSpeechID);
     }
 
     public void JumpToDialogue(string speechID)
     {
+        if (activeDialogueSO == null || currentConversation == null)
+        {
+            Debug.LogError("JumpToDialogue failed: No active dialogueSO or conversation.");
+            return;
+        }
+
         JumpToDialogue(activeDialogueSO, currentConversation.conversationName, speechID);
     }
 
     public void JumpToDialogue(DialogueSO newSO, string conversationName, string speechID)
     {
-
         if (newSO != null && newSO != activeDialogueSO)
         {
             activeDialogueSO = newSO;
@@ -156,9 +147,9 @@ public class DialogueManager : MonoBehaviour
         }
 
         DialogueActive = true;
-        DialogueBOX.SetActive(true);
+        if (DialogueBOX != null) DialogueBOX.SetActive(true);
 
-        DisplaySpeech(speechID);
+        StartDisplaySpeech(speechID);
     }
 
     public void JumpToDialogueSameSO(string conversationName, string speechID)
@@ -166,46 +157,94 @@ public class DialogueManager : MonoBehaviour
         JumpToDialogue(null, conversationName, speechID);
     }
 
-    private async Task DisplaySpeech(string speechID)
+    private void StartDisplaySpeech(string speechID)
+    {
+        if (typingCoroutine != null)
+        {
+            StopCoroutine(typingCoroutine);
+            typingCoroutine = null;
+        }
+
+        typingCoroutine = StartCoroutine(DisplaySpeechRoutine(speechID));
+    }
+
+    private IEnumerator DisplaySpeechRoutine(string speechID)
     {
         currentSpeech = activeDialogueSO.GetTalkingThingDialogueByName(currentConversation.conversationName, speechID);
-        //Debug.Log($"loading dialogue {currentSpeech} at ID {speechID}");
+
+        if (currentSpeech == null)
+        {
+            CloseDialogue();
+            yield break;
+        }
+
+        ToggleChoices(false);
+
+        if (DialogueBoxTEXT != null)
+            DialogueBoxTEXT.text = "";
+
+        string blabber = currentSpeech.Blabber ?? "";
+        float charDelay = fallbackCharDelay;
+
+        if (activeDialogueSO.talkAudio != null)
+        {
+            charDelay = Mathf.Max(minCharDelay, activeDialogueSO.talkAudio.length);
+            Debug.Log(activeDialogueSO.talkAudio.length);
+            Debug.Log(charDelay);
+        }
+
+        WaitForSeconds wait = new WaitForSeconds(charDelay);
+
+        for (int i = 0; i < blabber.Length; i++)
+        {
+            char c = blabber[i];
+
+            if (DialogueBoxTEXT != null)
+                DialogueBoxTEXT.text += c;
+
+            if (char.IsLetterOrDigit(c) && sourceDeLaAudiose != null && activeDialogueSO.talkAudio != null)
+            {
+                Debug.Log("la sound should be playing");
+                sourceDeLaAudiose.clip = activeDialogueSO.talkAudio;
+                sourceDeLaAudiose.Play();
+            }
+
+            yield return wait;
+        }
+
+        typingCoroutine = null;
+        UpdateChoices(currentSpeech.ChoicesIndexInt);
+    }
+
+    private void AdvanceDialogue()
+    {
         if (currentSpeech == null)
         {
             CloseDialogue();
             return;
         }
 
-        ToggleChoices(false);
-        DialogueBoxTEXT.text = "";
-        char[] arrayoftexttobeplaceinthetextbox1x1 = currentSpeech.Blabber.ToCharArray();
-        Regex r = new Regex(regx);
-        /*ActivlyLayingOutText = true;*/
-        for (int i = 0; i < arrayoftexttobeplaceinthetextbox1x1.Length; i++)
+        // If typing is still running, finish immediately on Space press
+        if (typingCoroutine != null)
         {
-            /*if (!layoutCancled)
-            {*/
-            DialogueBoxTEXT.text += arrayoftexttobeplaceinthetextbox1x1[i];
-            if (r.IsMatch(arrayoftexttobeplaceinthetextbox1x1[i].ToString()))
-            {
-                sourceDeLaAudiose.clip = activeDialogueSO.talkAudio;
-                sourceDeLaAudiose.Play();
-            }
-            await Task.Delay(/*Random.Range(10, 30)*/ (int)activeDialogueSO.talkAudio.length/* * 1000*/);
-            /*}*/
-        }
-        /*ActivlyLayingOutText = false;*/
-        UpdateChoices(currentSpeech.ChoicesIndexInt);
-    }
-
-    private void AdvanceDialogue()
-    {
-        if (currentSpeech == null || currentSpeech.NextSpeachIndexInt <= 0)
-        {
+            StopCoroutine(typingCoroutine);
+            typingCoroutine = null;
+            if (DialogueBoxTEXT != null)
+                DialogueBoxTEXT.text = currentSpeech.Blabber ?? "";
             UpdateChoices(currentSpeech.ChoicesIndexInt);
             return;
         }
-        DisplaySpeech(currentSpeech.NextSpeachIndexInt.ToString());
+
+        if (currentSpeech.NextSpeachIndexInt <= 0)
+        {
+            if (currentSpeech.ChoicesIndexInt > 0)
+                UpdateChoices(currentSpeech.ChoicesIndexInt);
+            else
+                CloseDialogue();
+            return;
+        }
+
+        StartDisplaySpeech(currentSpeech.NextSpeachIndexInt.ToString());
     }
 
     private void UpdateChoices(int choicesID)
@@ -226,9 +265,12 @@ public class DialogueManager : MonoBehaviour
 
         ToggleChoices(true);
 
-        Choice1Text.text = choicesData.ThreeOptionText.Length > 0 ? "1: " + choicesData.ThreeOptionText[0] : "";
-        Choice2Text.text = choicesData.ThreeOptionText.Length > 1 ? "2: " + choicesData.ThreeOptionText[1] : "";
-        Choice3Text.text = choicesData.ThreeOptionText.Length > 2 ? "3: " + choicesData.ThreeOptionText[2] : "";
+        if (Choice1Text != null)
+            Choice1Text.text = choicesData.ThreeOptionText.Length > 0 ? "1: " + choicesData.ThreeOptionText[0] : "";
+        if (Choice2Text != null)
+            Choice2Text.text = choicesData.ThreeOptionText.Length > 1 ? "2: " + choicesData.ThreeOptionText[1] : "";
+        if (Choice3Text != null)
+            Choice3Text.text = choicesData.ThreeOptionText.Length > 2 ? "3: " + choicesData.ThreeOptionText[2] : "";
     }
 
     private void SelectOption(int optionIndex)
@@ -236,23 +278,19 @@ public class DialogueManager : MonoBehaviour
         if (currentSpeech == null || !standardChoicesActive) return;
 
         DialogueSO.Choicess choicesData = activeDialogueSO.GetChoicessByName(currentConversation.conversationName, currentSpeech.ChoicesIndexInt.ToString());
-
         if (choicesData == null) return;
 
-        // 1. Invoke custom UnityEvent first (for gameplay side-effects like items/gold)
         if (choicesData.ThreeOptionEvents != null && optionIndex < choicesData.ThreeOptionEvents.Length)
         {
             choicesData.ThreeOptionEvents[optionIndex]?.Invoke();
         }
 
-        // 2. Handle Data-Driven Dialogue Jumps
         if (choicesData.ChoiceJumps != null && optionIndex < choicesData.ChoiceJumps.Length)
         {
             DialogueSO.DialogueJumpTarget jump = choicesData.ChoiceJumps[optionIndex];
 
             if (jump != null && !string.IsNullOrEmpty(jump.targetSpeechID))
             {
-                // If targetConversationName is empty, keep current conversation name
                 string targetConvo = string.IsNullOrEmpty(jump.targetConversationName)
                     ? currentConversation.conversationName
                     : jump.targetConversationName;
@@ -262,10 +300,9 @@ public class DialogueManager : MonoBehaviour
             }
         }
 
-        // Fallback: If no target speech ID is set, close the dialogue
         CloseDialogue();
     }
-
+    
     private void ToggleChoices(bool show)
     {
         standardChoicesActive = show;
@@ -278,6 +315,12 @@ public class DialogueManager : MonoBehaviour
 
     public void CloseDialogue()
     {
+        if (typingCoroutine != null)
+        {
+            StopCoroutine(typingCoroutine);
+            typingCoroutine = null;
+        }
+
         DialogueActive = false;
         standardChoicesActive = false;
         currentConversation = null;
@@ -294,12 +337,4 @@ public class DialogueManager : MonoBehaviour
 
         ToggleChoices(false);
     }
-}
-
-[System.Serializable]
-public class DialogueObjet
-{
-    DialogueSO dso;
-    string convoID;
-    string speechId;
 }

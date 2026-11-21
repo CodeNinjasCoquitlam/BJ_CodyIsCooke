@@ -3,14 +3,13 @@ using UnityEngine;
 public class Fridge : MonoBehaviour
 {
     public GameObject FridgeUI;
-    public GameObject[] FoodsToTakeOut;
-    private InteractITEM cody;
+    private InteractITEM interactionScript;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         FridgeUI.SetActive(false);
-        cody = GameObject.Find("Codey Variant").GetComponent<InteractITEM>();
+        interactionScript = GameObject.Find("Codey Variant").GetComponent<InteractITEM>();
     }
     // Update is called once per frame
     void Update()
@@ -24,9 +23,9 @@ public class Fridge : MonoBehaviour
     {
         FridgeUI.SetActive(true);
     }
-    public void GrabItem(int itemArrayID)
+    public void GrabItem(int ItemID)
     {
-        cody.PickupItem(FoodsToTakeOut[itemArrayID]);
+        interactionScript.GiveItemToCodey(ItemID);
         CloseFridge();
     }
     public void CloseFridge()

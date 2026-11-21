@@ -2873,7 +2873,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Grab
+  m_Text: Put
 --- !u!222 &409618887
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3318,7 +3318,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 335.1516, y: -249.90842}
+  m_AnchoredPosition: {x: 335.1516, y: -91.8626}
   m_SizeDelta: {x: 598.4244, y: 143.7252}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &444674197
@@ -3388,8 +3388,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1002872362}
   - {fileID: 444674196}
+  - {fileID: 1002872362}
   - {fileID: 487521868}
   - {fileID: 357836371}
   - {fileID: 285583279}
@@ -6197,6 +6197,7 @@ GameObject:
   - component: {fileID: 750215388}
   - component: {fileID: 750215387}
   - component: {fileID: 750215390}
+  - component: {fileID: 750215391}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -6242,6 +6243,8 @@ MonoBehaviour:
   Choice2Button: {fileID: 0}
   Choice3Button: {fileID: 0}
   PortraitAnchor: {fileID: 144074516}
+  fallbackCharDelay: 0.04
+  minCharDelay: 0.03
   DialogueActive: 0
 --- !u!4 &750215389
 Transform:
@@ -6271,8 +6274,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Fridge
   FridgeUI: {fileID: 42211926}
-  FoodsToTakeOut:
-  - {fileID: 217606741905407615, guid: 4226823326bcd2a46b0f2dba66086079, type: 3}
+--- !u!114 &750215391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 750215386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14723bd21f5b035449ac8e0bdcffa173, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  ItemTable: []
 --- !u!1001 &761447159
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8252,7 +8266,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: food 1
+  m_Text: Put Item Away
 --- !u!222 &989407876
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8372,7 +8386,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 335.1516, y: -91.8626}
+  m_AnchoredPosition: {x: 335.1516, y: -249.90842}
   m_SizeDelta: {x: 598.4244, y: 143.7252}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1002872363
@@ -10074,7 +10088,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: f8dc659489928c14fba2bdd9887fc89a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10514,7 +10528,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -13210,7 +13224,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1805666460}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 750215390}
+        m_TargetAssemblyTypeName: Fridge, Assembly-CSharp
+        m_MethodName: GrabItem
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1805666460
 MonoBehaviour:
   m_ObjectHideFlags: 0
